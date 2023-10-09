@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Main Page </title>
+    </head>
+    <body>
+        <h1>Groups</h1>
+
+        {{ range .Groups }}
+        <div>
+            <a class="character-name" href="/groups/{{ .Id }}">{{ .Name }}</a>
+            <img src="{{ .Image }}" alt="{{ .Name }}" width="200">
+        </div>
+        <hr>
+        {{ end }}
+    </body>
+</html>

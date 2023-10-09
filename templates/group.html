@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Name}}</title>
+</head>
+<body>
+    <h1>{{.Name}}</h1>
+    <img src="{{.Image}}" alt="{{.Name}} Image">
+    <h2>Date of creation: {{.CreationDate}}</h2>
+    <h2>Members:</h2>
+    <ul>
+        {{range .Members}}
+            <li>{{.}}</li>
+        {{end}}
+    </ul>
+    <h2>FirstAlbum: {{.FirstAlbum}}</h2>
+</body>
+</html>
