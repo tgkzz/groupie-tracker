@@ -12,6 +12,6 @@ func RunServer() {
 	mux.HandleFunc("/", handler.IndexHandler)
 	mux.HandleFunc("/groups/", handler.GroupHandler)
 
-	log.Println("Listening on: http://localhost:8080/")
-	http.ListenAndServe(":8080", mux)
+	log.Println("Listening on: http://localhost:4000/")
+	http.ListenAndServe(":4000", mux)
 }

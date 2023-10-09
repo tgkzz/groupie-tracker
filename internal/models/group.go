@@ -1,5 +1,10 @@
 package models
 
+type Err struct {
+	Text_err string
+	Code_err int
+}
+
 type Group struct {
 	Id           int      `json:"id"`
 	Image        string   `json:"image"`
