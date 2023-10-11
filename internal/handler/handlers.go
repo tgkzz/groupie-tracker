@@ -28,7 +28,6 @@ func ErrorHandler(w http.ResponseWriter, code int) {
 		http.Error(w, text, http.StatusInternalServerError)
 		return
 	}
-
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -98,6 +97,7 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// masrshaling artist url
 	resp, err := http.Get("https://groupietrackers.herokuapp.com/api/artists/" + id)
 	if err != nil {
 		ErrorHandler(w, http.StatusInternalServerError)
@@ -112,7 +112,50 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 	var group models.Group
 	json.Unmarshal(body, &group)
 
-	err = tmpl.Execute(w, group)
+	// marshalling locations url
+	respLocations, err := http.Get("https://groupietrackers.herokuapp.com/api/locations/" + id)
+	if err != nil {
+		ErrorHandler(w, http.StatusInternalServerError)
+		return
+	}
+
+	bodyLocations, err := io.ReadAll(respLocations.Body)
+	if err != nil {
+		ErrorHandler(w, http.StatusInternalServerError)
+		return
+	}
+	var locations models.Locations
+	json.Unmarshal(bodyLocations, &locations)
+
+	// marshaling relations url
+	respRelation, err := http.Get("https://groupietrackers.herokuapp.com/api/relation/" + id)
+	if err != nil {
+		ErrorHandler(w, http.StatusInternalServerError)
+		return
+	}
+
+	bodyRelation, err := io.ReadAll(respRelation.Body)
+	if err != nil {
+		ErrorHandler(w, http.StatusInternalServerError)
+		return
+	}
+	var dateLocation models.DateLocation
+	json.Unmarshal(bodyRelation, &dateLocation)
+
+	var ResultGroup models.ResultGroup
+
+	ResultGroup.Id = group.Id
+	ResultGroup.Image = group.Image
+	ResultGroup.Name = group.Name
+	ResultGroup.CreationDate = group.CreationDate
+	ResultGroup.Members = group.Members
+	ResultGroup.FirstAlbum = group.FirstAlbum
+
+	for _, loc := range locations.Locate {
+		ResultGroup.ConcertData = append(ResultGroup.ConcertData, models.Concerts{Location: loc, Dates: dateLocation.DateLoc[loc]})
+	}
+
+	err = tmpl.Execute(w, ResultGroup)
 	if err != nil {
 		ErrorHandler(w, http.StatusInternalServerError)
 		return

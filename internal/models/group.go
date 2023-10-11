@@ -17,6 +17,30 @@ type Group struct {
 	Relations    string   `json:"relations"`
 }
 
+type DateLocation struct {
+	DateLoc map[string][]string `json:"datesLocations"`
+}
+
+type Locations struct {
+	Locate   []string `json:"locations"`
+	DateLink string   `json:"dates"`
+}
+
+type Concerts struct {
+	Location string
+	Dates    []string
+}
+
+type ResultGroup struct {
+	Id           int
+	Image        string
+	Name         string
+	Members      []string
+	CreationDate int
+	FirstAlbum   string
+	ConcertData  []Concerts
+}
+
 type Groups struct {
 	Groups []Group
 }

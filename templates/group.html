@@ -16,5 +16,14 @@
         {{end}}
     </ul>
     <h2>FirstAlbum: {{.FirstAlbum}}</h2>
+    <h2>Date and location</h2>
+    <ul>
+    {{ range .ConcertData }}
+    <li>{{ .Location }}</li>
+        {{ range .Dates }}
+            <p> {{ . }} </p>
+        {{ end }}
+    {{ end }}
+    </ul>
 </body>
 </html>

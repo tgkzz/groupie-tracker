@@ -24,13 +24,20 @@ Start the server
   go run .
 ```
 
-The server will be run the server will start at the following link http://localhost:8080/
+The server will be run the server will start at the following link http://localhost:4000/
 
 
 ## Useful links
 
 - [api itself](https://groupietrackers.herokuapp.com/api)
 
+## Authors
+
+- [@kamamedov](https://01.alem.school/git/kamamedov)
+- [@akalbiat](https://01.alem.school/git/akalbiat)
+
 ## Important mention
 
-Currently this website is on developement stage, so pls do not beat me for bad front, and awful back((
+Currently this website is on developement stage, so pls do not beat us for bad front, and awful back((
+
+  a tak 👋 Happy checking
