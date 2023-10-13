@@ -39,5 +39,3 @@ The server will be run the server will start at the following link http://localh
 ## Important mention
 
 Currently this website is on developement stage, so pls do not beat us for bad front, and awful back((
-
-  a tak 👋 Happy checking
