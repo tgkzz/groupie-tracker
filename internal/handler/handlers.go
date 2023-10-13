@@ -4,11 +4,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"groupie-tracker/internal/models"
+	"groupie-tracker/internal/resp"
 	"html/template"
-	"io"
 	"net/http"
 	"strconv"
 	"strings"
+)
+
+var (
+	ArtistURL   string = "https://groupietrackers.herokuapp.com/api/artists"
+	LocationURL string = "https://groupietrackers.herokuapp.com/api/locations/"
+	RelationURL string = "https://groupietrackers.herokuapp.com/api/relation/"
 )
 
 func ErrorHandler(w http.ResponseWriter, code int) {
@@ -32,7 +38,7 @@ func ErrorHandler(w http.ResponseWriter, code int) {
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
-		ErrorHandler(w, http.StatusBadRequest)
+		ErrorHandler(w, http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -47,14 +53,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
-	if err != nil {
-		ErrorHandler(w, http.StatusInternalServerError)
-		return
-	}
-	defer resp.Body.Close()
-
-	body, err := io.ReadAll(resp.Body)
+	// marshaling all artist url
+	body, err := resp.ReturnResponseBody(ArtistURL)
 	if err != nil {
 		ErrorHandler(w, http.StatusInternalServerError)
 		return
@@ -72,7 +72,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 func GroupHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
-		ErrorHandler(w, http.StatusBadRequest)
+		ErrorHandler(w, http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -97,48 +97,31 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// masrshaling artist url
-	resp, err := http.Get("https://groupietrackers.herokuapp.com/api/artists/" + id)
-	if err != nil {
-		ErrorHandler(w, http.StatusInternalServerError)
-		return
-	}
-
-	body, err := io.ReadAll(resp.Body)
+	// marshaling artist url
+	bodyArtist, err := resp.ReturnResponseBody(ArtistURL + "/" + id)
 	if err != nil {
 		ErrorHandler(w, http.StatusInternalServerError)
 		return
 	}
 	var group models.Group
-	json.Unmarshal(body, &group)
+	json.Unmarshal(bodyArtist, &group)
 
 	// marshalling locations url
-	respLocations, err := http.Get("https://groupietrackers.herokuapp.com/api/locations/" + id)
-	if err != nil {
-		ErrorHandler(w, http.StatusInternalServerError)
-		return
-	}
-
-	bodyLocations, err := io.ReadAll(respLocations.Body)
+	bodyLocation, err := resp.ReturnResponseBody(LocationURL + id)
 	if err != nil {
 		ErrorHandler(w, http.StatusInternalServerError)
 		return
 	}
 	var locations models.Locations
-	json.Unmarshal(bodyLocations, &locations)
+	json.Unmarshal(bodyLocation, &locations)
 
 	// marshaling relations url
-	respRelation, err := http.Get("https://groupietrackers.herokuapp.com/api/relation/" + id)
+	bodyRelation, err := resp.ReturnResponseBody(RelationURL + id)
 	if err != nil {
 		ErrorHandler(w, http.StatusInternalServerError)
 		return
 	}
 
-	bodyRelation, err := io.ReadAll(respRelation.Body)
-	if err != nil {
-		ErrorHandler(w, http.StatusInternalServerError)
-		return
-	}
 	var dateLocation models.DateLocation
 	json.Unmarshal(bodyRelation, &dateLocation)
 
