@@ -20,7 +20,7 @@ var (
 func ErrorHandler(w http.ResponseWriter, code int) {
 	w.WriteHeader(code)
 
-	tmpl, err := template.ParseFiles("templates/error.html")
+	tmpl, err := template.ParseFiles("templates/html/error.html")
 	if err != nil {
 		text := fmt.Sprintf("Error 500\n Oppss! %s", http.StatusText(http.StatusInternalServerError))
 		http.Error(w, text, http.StatusInternalServerError)
@@ -47,7 +47,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl, err := template.ParseFiles("templates/index.html")
+	tmpl, err := template.ParseFiles("templates/html/index.html")
 	if err != nil {
 		ErrorHandler(w, http.StatusInternalServerError)
 		return
@@ -76,7 +76,7 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl, err := template.ParseFiles("templates/group.html")
+	tmpl, err := template.ParseFiles("templates/html/group.html")
 	if err != nil {
 		ErrorHandler(w, http.StatusNotFound)
 		return
