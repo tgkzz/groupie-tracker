@@ -9,6 +9,9 @@ import (
 func RunServer() {
 	mux := http.NewServeMux()
 
+	mux.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./templates/css"))))
+	mux.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("./templates/js"))))
+
 	mux.HandleFunc("/", handler.IndexHandler)
 	mux.HandleFunc("/groups/", handler.GroupHandler)
 
