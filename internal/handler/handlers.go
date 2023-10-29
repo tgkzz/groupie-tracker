@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"groupie-tracker/internal/models"
 	"groupie-tracker/internal/service/api"
 	"groupie-tracker/internal/service/filter"
@@ -153,34 +152,34 @@ func FilterHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if ResultGroup == nil {
-			log.Print("no data | failed the test")
-		}
-
-		for _, group := range ResultGroup {
-			fmt.Print("group id")
-			fmt.Println(group.Id)
-			fmt.Print("group name")
-			fmt.Println(group.Name)
-			fmt.Print("group creation")
-			fmt.Println(group.CreationDate)
-			fmt.Print("group members len")
-			fmt.Println(len(group.Members))
-			fmt.Println("------------------------------------------------------")
-		}
-
-		// tmpl, err := template.ParseFiles("templates/html/index.html")
-		// if err != nil {
-		// 	log.Print(err)
-		// 	ErrorHandler(w, http.StatusInternalServerError)
-		// 	return
+		// for _, group := range ResultGroup {
+		// 	fmt.Print("group id ")
+		// 	fmt.Println(group.Id)
+		// 	fmt.Print("group name ")
+		// 	fmt.Println(group.Name)
+		// 	fmt.Print("group creation ")
+		// 	fmt.Println(group.CreationDate)
+		// 	fmt.Print("group members len ")
+		// 	fmt.Println(len(group.Members))
+		// 	fmt.Println("------------------------------------------------------")
 		// }
 
-		// if err = tmpl.Execute(w, ResultGroup); err != nil {
-		// 	log.Print(err)
-		// 	ErrorHandler(w, http.StatusInternalServerError)
-		// 	return
-		// }
+		result := models.Groups{
+			Groups: models.ConvertToGroup(ResultGroup),
+		}
+
+		tmpl, err := template.ParseFiles("templates/html/index.html")
+		if err != nil {
+			log.Print(err)
+			ErrorHandler(w, http.StatusInternalServerError)
+			return
+		}
+
+		if err = tmpl.Execute(w, result); err != nil {
+			log.Print(err)
+			ErrorHandler(w, http.StatusInternalServerError)
+			return
+		}
 
 	default:
 		ErrorHandler(w, http.StatusMethodNotAllowed)
