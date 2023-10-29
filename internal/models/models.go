@@ -1,10 +1,5 @@
 package models
 
-type Err struct {
-	Text_err string
-	Code_err int
-}
-
 type Group struct {
 	Id           int      `json:"id"`
 	Image        string   `json:"image"`
@@ -43,4 +38,11 @@ type ResultGroup struct {
 
 type Groups struct {
 	Groups []Group
+}
+
+type Filter struct {
+	CreationDateFrom int
+	CreationDateTo   int
+	FirstAlbum       int
+	Members          []int
 }

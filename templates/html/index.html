@@ -10,6 +10,49 @@
 <body>
     <nav class="navbar navbar-expand-lg custom-navbar navbar-dark">
         <a class="navbar-brand" href="/">Groupie-tracker</a>
+        <form class="form-inline ml-auto" action="/filter" method="POST">
+
+        <div class="form-group mr-3">
+            <label>Количество участников:</label><br>
+            <input type="checkbox" id="oneMember" name="members[]" value="1">
+            <label for="oneMember" class="mr-2">1</label>
+            
+            <input type="checkbox" id="twoMembers" name="members[]" value="2">
+            <label for="twoMembers" class="mr-2">2</label>
+    
+            <input type="checkbox" id="threeMembers" name="members[]" value="3">
+            <label for="threeMembers" class="mr-2">3</label>
+    
+            <input type="checkbox" id="threeMembers" name="members[]" value="4">
+            <label for="fourMembers" class="mr-2">4</label>
+
+            <input type="checkbox" id="threeMembers" name="members[]" value="5">
+            <label for="fiveMembers" class="mr-2">5</label>
+
+            <input type="checkbox" id="threeMembers" name="members[]" value="6">
+            <label for="sixMembers" class="mr-2">6</label>
+
+            <input type="checkbox" id="threeMembers" name="members[]" value="7">
+            <label for="severnMembers" class="mr-2">7</label>
+
+        </div>
+        <div class="form-group mr-3">
+            <label for="creationDateFromFilter" class="mr-2">Дата создания (от)</label>
+            <input type="number" id="creationDateFromFilter" name="creation_date_from" class="form-control mr-3" min="1950" max="2023" placeholder="От года">
+        </div>
+        <div class="form-group mr-3">
+            <label for="creationDateToFilter" class="mr-2">Дата создания (до):</label>
+            <input type="number" id="creationDateToFilter" name="creation_date_to" class="form-control" min="1950" max="2023" placeholder="До года">
+        </div>
+
+        <div class="form-group">
+            <label for="firstAlbumFiletr" class="mr-2">Первый альбом</label>
+            <input type="number" id="firstAlbumFiletr" name="firstAlbum" min="1950" max="2023" class="form-control mr-3">
+        </div>
+
+        <button type="submit" class="btn btn-light">Фильтровать</button>
+        
+    </form>
     </nav>
 
     <div class="container mt-5">

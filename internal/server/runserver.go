@@ -1,12 +1,12 @@
 package server
 
 import (
-	handler "groupie-tracker/internal/handler"
+	"groupie-tracker/internal/handler"
 	"log"
 	"net/http"
 )
 
-func RunServer() {
+func Runserver() {
 	mux := http.NewServeMux()
 
 	mux.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./templates/css"))))
@@ -14,6 +14,7 @@ func RunServer() {
 
 	mux.HandleFunc("/", handler.IndexHandler)
 	mux.HandleFunc("/groups/", handler.GroupHandler)
+	mux.HandleFunc("/filter", handler.FilterHandler)
 
 	log.Println("Listening on: http://localhost:4000/")
 	http.ListenAndServe(":4000", mux)

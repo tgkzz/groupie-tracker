@@ -1,13 +1,13 @@
 package handler
 
 import (
-	"encoding/json"
 	"fmt"
 	"groupie-tracker/internal/models"
-	"groupie-tracker/internal/resp"
+	"groupie-tracker/internal/service/api"
+	"groupie-tracker/internal/service/filter"
 	"html/template"
+	"log"
 	"net/http"
-	"strconv"
 	"strings"
 )
 
@@ -17,130 +17,173 @@ var (
 	RelationURL string = "https://groupietrackers.herokuapp.com/api/relation/"
 )
 
-func ErrorHandler(w http.ResponseWriter, code int) {
-	w.WriteHeader(code)
-
-	tmpl, err := template.ParseFiles("templates/html/error.html")
-	if err != nil {
-		text := fmt.Sprintf("Error 500\n Oppss! %s", http.StatusText(http.StatusInternalServerError))
-		http.Error(w, text, http.StatusInternalServerError)
-		return
-	}
-
-	res := &models.Err{Text_err: http.StatusText(code), Code_err: code}
-	err = tmpl.Execute(w, &res)
-	if err != nil {
-		text := fmt.Sprintf("Error 500\n Oppss! %s", http.StatusText(http.StatusInternalServerError))
-		http.Error(w, text, http.StatusInternalServerError)
-		return
-	}
-}
-
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
-		ErrorHandler(w, http.StatusMethodNotAllowed)
-		return
-	}
-
 	if r.URL.Path != "/" {
+		log.Print("incorrect path")
 		ErrorHandler(w, http.StatusNotFound)
 		return
 	}
 
-	tmpl, err := template.ParseFiles("templates/html/index.html")
-	if err != nil {
-		ErrorHandler(w, http.StatusInternalServerError)
-		return
-	}
+	switch r.Method {
+	case "GET":
+		//parsing html
+		tmpl, err := template.ParseFiles("templates/html/index.html")
+		if err != nil {
+			log.Print(err)
+			ErrorHandler(w, http.StatusInternalServerError)
+			return
+		}
 
-	// marshaling all artist url
-	body, err := resp.ReturnResponseBody(ArtistURL)
-	if err != nil {
-		ErrorHandler(w, http.StatusInternalServerError)
-		return
-	}
+		// marshaling all artist url
+		var groups models.Groups
+		groups, err = api.GroupsJsonMarshalling(ArtistURL)
+		if err != nil {
+			log.Print(err)
+			ErrorHandler(w, http.StatusInternalServerError)
+			return
+		}
 
-	var groups models.Groups
-	json.Unmarshal(body, &groups.Groups)
-
-	err = tmpl.Execute(w, groups)
-	if err != nil {
-		ErrorHandler(w, http.StatusInternalServerError)
+		// executing template
+		if err = tmpl.Execute(w, groups); err != nil {
+			log.Print(err)
+			ErrorHandler(w, http.StatusInternalServerError)
+			return
+		}
+	default:
+		log.Print("incorrect method")
+		ErrorHandler(w, http.StatusMethodNotAllowed)
 		return
 	}
 }
 
 func GroupHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
-		ErrorHandler(w, http.StatusMethodNotAllowed)
-		return
-	}
+	id := strings.TrimPrefix(r.URL.Path, "/groups/")
 
+	// parsing html
 	tmpl, err := template.ParseFiles("templates/html/group.html")
 	if err != nil {
+		log.Print(err)
 		ErrorHandler(w, http.StatusNotFound)
 		return
 	}
 
-	path := r.URL.Path
-
-	id := strings.TrimPrefix(path, "/groups/")
-
-	idNum, err := strconv.Atoi(id)
-	if err != nil {
-		ErrorHandler(w, http.StatusInternalServerError)
-		return
-	}
-
-	if id == "" || idNum > 52 {
+	// path validation
+	if err = api.PathValidation(r.URL.Path); err != nil {
+		log.Print(err)
 		ErrorHandler(w, http.StatusNotFound)
 		return
 	}
 
-	// marshaling artist url
-	bodyArtist, err := resp.ReturnResponseBody(ArtistURL + "/" + id)
-	if err != nil {
-		ErrorHandler(w, http.StatusInternalServerError)
-		return
-	}
+	// marshalling artist url
 	var group models.Group
-	json.Unmarshal(bodyArtist, &group)
+	group, err = api.GroupJsonMarshalling(ArtistURL + "/" + id)
+	if err != nil {
+		log.Print(err)
+		ErrorHandler(w, http.StatusInternalServerError)
+		return
+	}
 
 	// marshalling locations url
-	bodyLocation, err := resp.ReturnResponseBody(LocationURL + id)
-	if err != nil {
-		ErrorHandler(w, http.StatusInternalServerError)
-		return
-	}
 	var locations models.Locations
-	json.Unmarshal(bodyLocation, &locations)
-
-	// marshaling relations url
-	bodyRelation, err := resp.ReturnResponseBody(RelationURL + id)
+	locations, err = api.LocationJsonMarshalling(LocationURL + id)
 	if err != nil {
+		log.Print(err)
 		ErrorHandler(w, http.StatusInternalServerError)
 		return
 	}
 
+	// marshalling relations url
 	var dateLocation models.DateLocation
-	json.Unmarshal(bodyRelation, &dateLocation)
-
-	var ResultGroup models.ResultGroup
-
-	ResultGroup.Id = group.Id
-	ResultGroup.Image = group.Image
-	ResultGroup.Name = group.Name
-	ResultGroup.CreationDate = group.CreationDate
-	ResultGroup.Members = group.Members
-	ResultGroup.FirstAlbum = group.FirstAlbum
-
-	for _, loc := range locations.Locate {
-		ResultGroup.ConcertData = append(ResultGroup.ConcertData, models.Concerts{Location: loc, Dates: dateLocation.DateLoc[loc]})
+	dateLocation, err = api.RelationJsonMarshalling(RelationURL + id)
+	if err != nil {
+		log.Print(err)
+		ErrorHandler(w, http.StatusInternalServerError)
+		return
 	}
 
+	// formulating result group request
+	var ResultGroup models.ResultGroup
+	ResultGroup = api.FormResultGroup(group, locations, dateLocation)
+
+	// executing template
 	err = tmpl.Execute(w, ResultGroup)
 	if err != nil {
+		log.Print(err)
 		ErrorHandler(w, http.StatusInternalServerError)
+		return
+	}
+}
+
+func FilterHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/filter" {
+		log.Print("incorrect path")
+		ErrorHandler(w, http.StatusNotFound)
+		return
+	}
+
+	switch r.Method {
+	case "POST":
+		var err error
+
+		if err := r.ParseForm(); err != nil {
+			log.Print(err)
+			ErrorHandler(w, http.StatusInternalServerError)
+			return
+		}
+
+		CreationDateFrom := r.FormValue("creation_date_from")
+		CreationDateTo := r.FormValue("creation_date_to")
+		FirstAlbum := r.FormValue("firstAlbum")
+		members := r.Form["members[]"]
+
+		var filters models.Filter
+		filters, err = filter.DataHandling(CreationDateFrom, CreationDateTo, FirstAlbum, members)
+		if err != nil {
+			log.Print(err)
+			ErrorHandler(w, http.StatusBadRequest)
+			return
+		}
+
+		var ResultGroup []models.ResultGroup
+
+		ResultGroup, err = filter.ProcessData(filters)
+		if err != nil {
+			log.Print(err)
+			ErrorHandler(w, http.StatusInternalServerError)
+			return
+		}
+
+		if ResultGroup == nil {
+			log.Print("no data | failed the test")
+		}
+
+		for _, group := range ResultGroup {
+			fmt.Print("group id")
+			fmt.Println(group.Id)
+			fmt.Print("group name")
+			fmt.Println(group.Name)
+			fmt.Print("group creation")
+			fmt.Println(group.CreationDate)
+			fmt.Print("group members len")
+			fmt.Println(len(group.Members))
+			fmt.Println("------------------------------------------------------")
+		}
+
+		// tmpl, err := template.ParseFiles("templates/html/index.html")
+		// if err != nil {
+		// 	log.Print(err)
+		// 	ErrorHandler(w, http.StatusInternalServerError)
+		// 	return
+		// }
+
+		// if err = tmpl.Execute(w, ResultGroup); err != nil {
+		// 	log.Print(err)
+		// 	ErrorHandler(w, http.StatusInternalServerError)
+		// 	return
+		// }
+
+	default:
+		ErrorHandler(w, http.StatusMethodNotAllowed)
 		return
 	}
 }
