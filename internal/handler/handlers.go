@@ -41,7 +41,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		groups, err = api.GroupsJsonMarshalling(ArtistURL)
 		if err != nil {
 			log.Print(err)
-			ErrorHandler(w, http.StatusInternalServerError)
+			ErrorHandler(w, http.StatusServiceUnavailable)
 			return
 		}
 
@@ -81,7 +81,7 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 	group, err = api.GroupJsonMarshalling(ArtistURL + "/" + id)
 	if err != nil {
 		log.Print(err)
-		ErrorHandler(w, http.StatusInternalServerError)
+		ErrorHandler(w, http.StatusServiceUnavailable)
 		return
 	}
 
@@ -90,7 +90,7 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 	locations, err = api.LocationJsonMarshalling(LocationURL + id)
 	if err != nil {
 		log.Print(err)
-		ErrorHandler(w, http.StatusInternalServerError)
+		ErrorHandler(w, http.StatusServiceUnavailable)
 		return
 	}
 
@@ -99,7 +99,7 @@ func GroupHandler(w http.ResponseWriter, r *http.Request) {
 	dateLocation, err = api.RelationJsonMarshalling(RelationURL + id)
 	if err != nil {
 		log.Print(err)
-		ErrorHandler(w, http.StatusInternalServerError)
+		ErrorHandler(w, http.StatusServiceUnavailable)
 		return
 	}
 
@@ -220,7 +220,7 @@ func LocationHandler(w http.ResponseWriter, r *http.Request) {
 	resp, err := http.Get(LocationURL + id)
 	if err != nil {
 		log.Print(err)
-		ErrorHandler(w, http.StatusInternalServerError)
+		ErrorHandler(w, http.StatusServiceUnavailable)
 		return
 	}
 	defer resp.Body.Close()
