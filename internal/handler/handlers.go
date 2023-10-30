@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"groupie-tracker/internal/models"
 	"groupie-tracker/internal/service/api"
 	"groupie-tracker/internal/service/filter"
@@ -152,17 +153,17 @@ func FilterHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// for _, group := range ResultGroup {
-		// 	fmt.Print("group id ")
-		// 	fmt.Println(group.Id)
-		// 	fmt.Print("group name ")
-		// 	fmt.Println(group.Name)
-		// 	fmt.Print("group creation ")
-		// 	fmt.Println(group.CreationDate)
-		// 	fmt.Print("group members len ")
-		// 	fmt.Println(len(group.Members))
-		// 	fmt.Println("------------------------------------------------------")
-		// }
+		for _, group := range ResultGroup {
+			fmt.Print("group id ")
+			fmt.Println(group.Id)
+			fmt.Print("group name ")
+			fmt.Println(group.Name)
+			fmt.Print("group creation ")
+			fmt.Println(group.CreationDate)
+			fmt.Print("group members len ")
+			fmt.Println(len(group.Members))
+			fmt.Println("------------------------------------------------------")
+		}
 
 		result := models.Groups{
 			Groups: models.ConvertToGroup(ResultGroup),

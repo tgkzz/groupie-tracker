@@ -39,12 +39,18 @@ func DataHandling(from string, to string, firstAlbum string, members []string) (
 		return emptyStruct, err
 	}
 
-	for _, num := range members {
-		tmp, err := strconv.Atoi(num)
-		if err != nil {
-			return emptyStruct, err
+	if members == nil {
+		for i := 1; i <= 10; i++ {
+			result.Members = append(result.Members, i)
 		}
-		result.Members = append(result.Members, tmp)
+	} else {
+		for _, num := range members {
+			tmp, err := strconv.Atoi(num)
+			if err != nil {
+				return emptyStruct, err
+			}
+			result.Members = append(result.Members, tmp)
+		}
 	}
 
 	return result, nil
