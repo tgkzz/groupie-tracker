@@ -2,10 +2,11 @@ package filter
 
 import (
 	"groupie-tracker/internal/models"
+	"log"
 	"strconv"
 )
 
-func DataHandling(from string, to string, firstAlbumFrom string, firstAlbumTo string, members []string) (models.Filter, error) {
+func DataHandling(from string, to string, firstAlbumFrom string, firstAlbumTo string, members []string, location string) (models.Filter, error) {
 	var err error
 
 	emptyStruct := models.Filter{}
@@ -25,26 +26,30 @@ func DataHandling(from string, to string, firstAlbumFrom string, firstAlbumTo st
 	}
 
 	if firstAlbumTo == "" {
-		firstAlbumFrom = "922337203685477580"
+		firstAlbumTo = "922337203685477580"
 	}
 
 	result.CreationDateFrom, err = strconv.Atoi(from)
 	if err != nil {
+		log.Print("asd")
 		return emptyStruct, err
 	}
 
 	result.CreationDateTo, err = strconv.Atoi(to)
 	if err != nil {
+		log.Print("qwe")
 		return emptyStruct, err
 	}
 
 	result.FirstAlbumTo, err = strconv.Atoi(firstAlbumTo)
 	if err != nil {
+		log.Print("zxc")
 		return emptyStruct, err
 	}
 
 	result.FirstAlbumFrom, err = strconv.Atoi(firstAlbumFrom)
 	if err != nil {
+		log.Print("hfg")
 		return emptyStruct, err
 	}
 
@@ -61,6 +66,8 @@ func DataHandling(from string, to string, firstAlbumFrom string, firstAlbumTo st
 			result.Members = append(result.Members, tmp)
 		}
 	}
+
+	result.Location = location
 
 	return result, nil
 }

@@ -6,8 +6,10 @@ import (
 	"groupie-tracker/internal/service/api"
 	"groupie-tracker/internal/service/filter"
 	"html/template"
+	"io"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
@@ -136,9 +138,11 @@ func FilterHandler(w http.ResponseWriter, r *http.Request) {
 		FirstAlbumFrom := r.FormValue("firstAlbum_from")
 		FirstAlbumTo := r.FormValue("firstAlbum_to")
 		members := r.Form["members[]"]
+		location := r.FormValue("location")
+		fmt.Println(location)
 
 		var filters models.Filter
-		filters, err = filter.DataHandling(CreationDateFrom, CreationDateTo, FirstAlbumFrom, FirstAlbumTo, members)
+		filters, err = filter.DataHandling(CreationDateFrom, CreationDateTo, FirstAlbumFrom, FirstAlbumTo, members, location)
 		if err != nil {
 			log.Print(err)
 			ErrorHandler(w, http.StatusBadRequest)
@@ -187,4 +191,40 @@ func FilterHandler(w http.ResponseWriter, r *http.Request) {
 		ErrorHandler(w, http.StatusMethodNotAllowed)
 		return
 	}
+}
+
+func LocationHandler(w http.ResponseWriter, r *http.Request) {
+	// referrer := r.Header.Get("Referrer")
+	// log.Print(referrer)
+	// if referrer == "" || !strings.Contains(referrer, "localhost:4000") {
+	// 	log.Print("path forbidden")
+	// 	ErrorHandler(w, http.StatusForbidden)
+	// 	return
+	// }
+
+	id := r.URL.Path[len("/location/"):]
+
+	idNum, err := strconv.Atoi(id)
+	if err != nil {
+		log.Print(err)
+		ErrorHandler(w, http.StatusNotFound)
+		return
+	}
+
+	if r.URL.Path != "/location/"+id || idNum < 1 || idNum > 52 || r.URL.Path == "/location/" {
+		log.Print("incorrect path")
+		ErrorHandler(w, http.StatusNotFound)
+		return
+	}
+
+	resp, err := http.Get(LocationURL + id)
+	if err != nil {
+		log.Print(err)
+		ErrorHandler(w, http.StatusInternalServerError)
+		return
+	}
+	defer resp.Body.Close()
+
+	w.Header().Set("Content-Type", "application/json")
+	io.Copy(w, resp.Body)
 }

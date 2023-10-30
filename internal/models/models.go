@@ -46,4 +46,5 @@ type Filter struct {
 	FirstAlbumFrom   int
 	FirstAlbumTo     int
 	Members          []int
+	Location         string
 }
