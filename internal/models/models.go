@@ -43,6 +43,7 @@ type Groups struct {
 type Filter struct {
 	CreationDateFrom int
 	CreationDateTo   int
-	FirstAlbum       int
+	FirstAlbumFrom   int
+	FirstAlbumTo     int
 	Members          []int
 }

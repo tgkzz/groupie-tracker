@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func DataHandling(from string, to string, firstAlbum string, members []string) (models.Filter, error) {
+func DataHandling(from string, to string, firstAlbumFrom string, firstAlbumTo string, members []string) (models.Filter, error) {
 	var err error
 
 	emptyStruct := models.Filter{}
@@ -20,8 +20,12 @@ func DataHandling(from string, to string, firstAlbum string, members []string) (
 		to = "922337203685477580"
 	}
 
-	if firstAlbum == "" {
-		firstAlbum = "0"
+	if firstAlbumFrom == "" {
+		firstAlbumFrom = "0"
+	}
+
+	if firstAlbumTo == "" {
+		firstAlbumFrom = "922337203685477580"
 	}
 
 	result.CreationDateFrom, err = strconv.Atoi(from)
@@ -34,7 +38,12 @@ func DataHandling(from string, to string, firstAlbum string, members []string) (
 		return emptyStruct, err
 	}
 
-	result.FirstAlbum, err = strconv.Atoi(firstAlbum)
+	result.FirstAlbumTo, err = strconv.Atoi(firstAlbumTo)
+	if err != nil {
+		return emptyStruct, err
+	}
+
+	result.FirstAlbumFrom, err = strconv.Atoi(firstAlbumFrom)
 	if err != nil {
 		return emptyStruct, err
 	}

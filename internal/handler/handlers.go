@@ -133,11 +133,12 @@ func FilterHandler(w http.ResponseWriter, r *http.Request) {
 
 		CreationDateFrom := r.FormValue("creation_date_from")
 		CreationDateTo := r.FormValue("creation_date_to")
-		FirstAlbum := r.FormValue("firstAlbum")
+		FirstAlbumFrom := r.FormValue("firstAlbum_from")
+		FirstAlbumTo := r.FormValue("firstAlbum_to")
 		members := r.Form["members[]"]
 
 		var filters models.Filter
-		filters, err = filter.DataHandling(CreationDateFrom, CreationDateTo, FirstAlbum, members)
+		filters, err = filter.DataHandling(CreationDateFrom, CreationDateTo, FirstAlbumFrom, FirstAlbumTo, members)
 		if err != nil {
 			log.Print(err)
 			ErrorHandler(w, http.StatusBadRequest)
