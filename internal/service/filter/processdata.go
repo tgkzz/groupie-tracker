@@ -31,9 +31,17 @@ func ProcessData(filter models.Filter) ([]models.ResultGroup, error) {
 	fmt.Printf("Locations: %s\n", filter.Location)
 
 	for _, group := range allGroups {
+
+		allLocation := []string{}
+
+		for _, concert := range group.ConcertData {
+			allLocation = append(allLocation, concert.Location)
+		}
+
 		if group.CreationDate >= filter.CreationDateFrom && group.CreationDate <= filter.CreationDateTo &&
-			filter.FirstAlbumFrom <= pkg.TakeYearFromData(group.FirstAlbum) && filter.FirstAlbumTo >= pkg.TakeYearFromData(group.FirstAlbum) &&
-			pkg.InTheSlice(len(group.Members), filter.Members) {
+			filter.FirstAlbumFrom <= pkg.FetchYearFromData(group.FirstAlbum) && filter.FirstAlbumTo >= pkg.FetchYearFromData(group.FirstAlbum) &&
+			pkg.InTheSliceInt(len(group.Members), filter.Members) &&
+			pkg.InTheSliceString(filter.Location, allLocation) {
 			Result = append(Result, group)
 		}
 

@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func TakeYearFromData(str string) int {
+func FetchYearFromData(str string) int {
 	parts := strings.Split(str, "-")
 
 	result, _ := strconv.Atoi(parts[2])
