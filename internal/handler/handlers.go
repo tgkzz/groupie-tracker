@@ -1,10 +1,12 @@
 package handler
 
 import (
+	"encoding/json"
 	"fmt"
 	"groupie-tracker/internal/models"
 	"groupie-tracker/internal/service/api"
 	"groupie-tracker/internal/service/filter"
+	"groupie-tracker/internal/service/search"
 	"html/template"
 	"io"
 	"log"
@@ -20,6 +22,9 @@ var (
 )
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
+
+	// FIX IT
+	// url handling currently work unproperly due to adding metrics
 	if r.URL.Path != "/" {
 		log.Print("incorrect path")
 		ErrorHandler(w, http.StatusNotFound)
@@ -191,6 +196,42 @@ func FilterHandler(w http.ResponseWriter, r *http.Request) {
 		ErrorHandler(w, http.StatusMethodNotAllowed)
 		return
 	}
+}
+
+func SearchHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/search" {
+		ErrorHandler(w, http.StatusNotFound)
+		return
+	}
+	if r.Method != "GET" {
+		ErrorHandler(w, http.StatusMethodNotAllowed)
+		return
+	}
+	searchText := r.FormValue("searchText")
+	if searchText == "" {
+		ErrorHandler(w, http.StatusBadRequest)
+		return
+	}
+
+	body, err := api.ReturnResponseBody(ArtistURL)
+	if err != nil {
+		ErrorHandler(w, http.StatusInternalServerError)
+		return
+	}
+
+	responseMap, err := search.SearchByTxt(searchText, body)
+	if err != nil {
+		ErrorHandler(w, http.StatusInternalServerError)
+		return
+	}
+
+	response, err := json.Marshal(responseMap)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(response)
 }
 
 func LocationHandler(w http.ResponseWriter, r *http.Request) {

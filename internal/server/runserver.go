@@ -4,6 +4,8 @@ import (
 	"groupie-tracker/internal/handler"
 	"log"
 	"net/http"
+
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 func Runserver() {
@@ -16,6 +18,10 @@ func Runserver() {
 	mux.HandleFunc("/groups/", handler.GroupHandler)
 	mux.HandleFunc("/filter", handler.FilterHandler)
 	mux.HandleFunc("/location/", handler.LocationHandler)
+	mux.HandleFunc("/search", handler.SearchHandler)
+
+	//adding metrics
+	mux.Handle("/metrics", promhttp.Handler())
 
 	log.Println("Listening on: http://localhost:4000/")
 	http.ListenAndServe(":4000", mux)
