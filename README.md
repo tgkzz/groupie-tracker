@@ -32,8 +32,8 @@ The server will be run the server will start at the following link http://localh
 - [CSS](https://www.w3schools.com/css/) (Stylize)
 - [Go](https://go.dev/) (Server part)
 - [JavaScript](https://www.postgresql.org/) (Locations display and AJAX response)
-- [Prometheus](https://prometheus.io/) (metrics)
-- [Grafana](https://grafana.com/) (metrics visualization (grafana was run locally))
+- [Prometheus](https://prometheus.io/) (Metrics itself)
+- [Grafana](https://grafana.com/) (Metrics visualization (grafana was run locally))
 
 
 ## Useful links
