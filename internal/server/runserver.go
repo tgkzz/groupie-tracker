@@ -72,6 +72,9 @@ func Runserver() {
 	//adding metrics
 	mux.Handle("/metrics", promhttp.Handler())
 
+	//heathcheck handler
+	mux.HandleFunc("/health", handler.HealthCheck)
+
 	log.Println("Listening on: http://localhost:4000/")
 	http.ListenAndServe(":4000", mux)
 }

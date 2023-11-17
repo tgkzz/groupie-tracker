@@ -21,6 +21,10 @@ var (
 	RelationURL string = "https://groupietrackers.herokuapp.com/api/relation/"
 )
 
+func HealthCheck(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "application is running...")
+}
+
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	// FIX IT
