@@ -26,6 +26,7 @@ func Search(text, term, is string) bool {
 	}
 	return res2
 }
+
 func Split(text, term string) []string {
 	switch term {
 	case "album":
