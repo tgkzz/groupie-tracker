@@ -34,8 +34,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
 		//parsing html
-		tmpl, err := template.ParseFiles("templates/html/asd.html")
-		//tmpl, err := template.ParseFiles("templates/html/index.html")
+		tmpl, err := template.ParseFiles("templates/html/index.html")
 		if err != nil {
 			log.Print(err)
 			ErrorHandler(w, http.StatusInternalServerError)
