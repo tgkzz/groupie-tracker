@@ -22,7 +22,7 @@ var (
 )
 
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "application is running... and I HAVE MADE CHANGES :)")
+	fmt.Fprintf(w, "application is running... and I HAVE MADE SOME CHANGES :)")
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
