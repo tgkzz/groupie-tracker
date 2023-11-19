@@ -2,17 +2,9 @@ module groupie-tracker
 
 go 1.20
 
-require github.com/prometheus/client_golang v1.17.0
-
 require (
-	github.com/bshuster-repo/logrus-logstash-hook v1.1.0 // indirect
-	github.com/josharian/intern v1.0.0 // indirect
-	github.com/mailru/easyjson v0.7.7 // indirect
-	github.com/olivere/elastic v6.2.37+incompatible // indirect
-	github.com/pkg/errors v0.9.1 // indirect
-	github.com/sirupsen/logrus v1.9.3 // indirect
-	gopkg.in/airbrake/gobrake.v2 v2.0.9 // indirect
-	gopkg.in/gemnasium/logrus-airbrake-hook.v2 v2.1.2 // indirect
+	github.com/prometheus/client_golang v1.17.0
+	github.com/sirupsen/logrus v1.9.3
 )
 
 require (
@@ -25,5 +17,4 @@ require (
 	github.com/prometheus/procfs v0.11.1 // indirect
 	golang.org/x/sys v0.11.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
-	gopkg.in/olivere/elastic.v6 v6.2.37
 )
