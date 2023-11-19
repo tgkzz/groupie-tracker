@@ -1,26 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/errorStyle.css">
-    <title>{{.Text_err}}</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg custom-navbar navbar-dark">
-      <a class="navbar-brand" href="/">Groupie-tracker</a>
-  </nav>
 
-    <div class="container">
-        <h1 class="text-center my-4 text-danger">Error {{.Code_err}}</h1>
-        <div class="alert alert-danger" role="alert">
-            <p class="text">Oppss! {{.Text_err}}</p>
-        </div>
-        <div class="text-center">
-            <a href="javascript:history.back()" class="btn btn-primary">Go back</a>
-        </div>
-    </div>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ERROR</title>
+  <link rel="stylesheet" href="/css/error.css">
+  <link rel="shortcut icon" href="/img/log.png">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap" rel="stylesheet">
+  <header class="header">
+    <a style="text-decoration: none; align-items: center;" href="/">
+      <h1>Groupie-tracker</h1>
+    </a>
+
+  </header>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-size: 52px;
+      background-color: #747d7a;
+      /* Установка  фона */
+      color: #0c0701;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    /* Стили для контейнера */
+    .err {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Стили для заголовков */
+    h1 {
+      margin-bottom: 0px;
+      font-size: 52px;
+      font-weight: 500;
+    }
+
+    /* Стили для гифки */
+    img {
+      width: 500px;
+      /* Установка ширины гифки */
+      height: auto;
+      /* Автоматическое соотношение сторон */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="err">
+    <h1>{{.Code_err}}</h1>
+    <h2>{{.Text_err}}</h2>
+
+    <img src="/img/error.gif" alt="Анимированная гифка">
+  </div>
+
+</body>
+
 </html>

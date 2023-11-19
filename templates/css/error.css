@@ -1,0 +1,46 @@
+body {
+    font-family: 'Dela Gothic One', sans-serif;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+    flex-direction: column;
+    background-color: #f4f4f4;
+    display: flex;
+    min-height: 100vh;
+}
+.header {
+  display: flex;
+    position: fixed;
+    /* Делаем header фиксированным */
+    top: 0;
+    align-items:center;
+    /* Header будет прикреплен к верхней части окна браузера */
+    width: 100%;
+    /* Занимает всю ширину экрана */
+    background-color: #000000;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    padding: 20px;
+    /* height: 50px; */
+    overflow: hidden;
+    /* Скрываем содержимое, выходящее за пределы блока */
+    /* white-space: nowrap; Запрещаем перенос текста на новую строку */
+    text-overflow: ellipsis;
+    /* Если текст выходит за пределы блока, добавляем многоточие (...) */
+  }
+  
+  /* .logo img {
+      width: 100px; 
+  } */
+  
+  .header h1 { 
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin: -15px;
+    color:#ebebeb;
+    font-family: 'Dela Gothic One', cursive;
+  
+  }
+  

@@ -62,6 +62,7 @@ func Runserver() {
 
 	mux.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./templates/css"))))
 	mux.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("./templates/js"))))
+	mux.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir("./templates/img"))))
 
 	mux.Handle("/", recordMetrics(http.HandlerFunc(handler.IndexHandler)))
 	mux.Handle("/groups/", recordMetrics(http.HandlerFunc(handler.GroupHandler)))

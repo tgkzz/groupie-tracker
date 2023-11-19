@@ -1,8 +1,6 @@
-
 # Groupie-tracker
 
 groupie-tracker, is a pet project that reads data from the api, and then displays it in this project as a web site
-
 
 ## Run Locally
 
@@ -35,7 +33,6 @@ The server will be run the server will start at the following link http://localh
 - [Prometheus](https://prometheus.io/) (Metrics itself)
 - [Grafana](https://grafana.com/) (Metrics visualization (grafana was run locally))
 
-
 ## Useful links
 
 - [api itself](https://groupietrackers.herokuapp.com/api)
@@ -44,6 +41,7 @@ The server will be run the server will start at the following link http://localh
 
 - [@kamamedov](https://01.alem.school/git/kamamedov)
 - [@akalbiat](https://01.alem.school/git/akalbiat)
+- [@msardarb](https://01.alem.school/git/msardarb)
 
 ## Important mention
 

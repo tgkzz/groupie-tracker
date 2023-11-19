@@ -2,71 +2,90 @@
 <html>
 
 <head>
-    <title>Main Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/indexstyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="shortcut icon" href="/img/log.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap" rel="stylesheet">
+    <title>Groupie tracker</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg custom-navbar navbar-dark">
-        <a class="navbar-brand" href="/">Groupie-tracker</a>
-        <form class="form-inline ml-auto" action="/filter" method="POST">
-
-            <div class="form-group mr-3">
-                <label>Number of members</label><br>
-                <input type="checkbox" id="oneMember" name="members[]" value="1">
-                <label for="oneMember" class="mr-2">1</label>
-                
-                <input type="checkbox" id="twoMembers" name="members[]" value="2">
-                <label for="twoMembers" class="mr-2">2</label>
-        
-                <input type="checkbox" id="threeMembers" name="members[]" value="3">
-                <label for="threeMembers" class="mr-2">3</label>
-        
-                <input type="checkbox" id="fourMembers" name="members[]" value="4">
-                <label for="fourMembers" class="mr-2">4</label>
-    
-                <input type="checkbox" id="fiveMembers" name="members[]" value="5">
-                <label for="fiveMembers" class="mr-2">5</label>
-    
-                <input type="checkbox" id="sixMembers" name="members[]" value="6">
-                <label for="sixMembers" class="mr-2">6</label>
-    
-                <input type="checkbox" id="sevenMembers" name="members[]" value="7">
-                <label for="severnMembers" class="mr-2">7</label>
-    
-                <input type="checkbox" id="sevenMembers" name="members[]" value="8">
-                <label for="eightMembers" class="mr-2">8</label>
-    
-            </div>
-            <div class="form-group mr-3">
-                <label for="creationDateFromFilter" class="mr-2">Creation Date (from)</label>
-                <input type="number" id="creationDateFromFilter" name="creation_date_from" class="form-control mr-3" min="1950" max="2023" placeholder="От года">
-            </div>
-            <div class="form-group mr-3">
-                <label for="creationDateToFilter" class="mr-2">Creation Date (to)</label>
-                <input type="number" id="creationDateToFilter" name="creation_date_to" class="form-control" min="1950" max="2023" placeholder="До года">
-            </div>
-    
-            <div class="form-group mr-3">
-                <label for="firstAlbumFilter" class="mr-2">First Album (from)</label>
-                <input type="number" id="firstAlbumFilter" name="firstAlbum_from" min="1950" max="2023" class="form-control mr-3">
-            </div>
-            <div class="form-group mr-3">
-                <label for="firstAlbumFilter" class="mr-2">First Album (to)</label>
-                <input type="number" id="firstAlbumFilter" name="firstAlbum_to" min="1950" max="2023" class="form-control mr-3">
-            </div>
-    
-            <div class="form-group mr-3">
-                <label for="locationFilter">Location</label>
-                <select id="locationFilter" name="location" class="form-control">
-                    <option value="">choose location...</option>
-                </select>
-            </div>
-    
-            <button type="submit" class="btn btn-light">Filter</button>
+    <nav class="header">
+        <div class="nav_1">
+        <div class="navbar-center">
+            <a class="header-text"style="text-decoration: none;" href="/">
+        <h1>Groupie-tracker</h1>
+            </a>
+        </div>
+        <div class="navbar-items">
+        <div class="dropdown-container">
+        <button class="dropdown-button" onclick="toggleDropdown()">Filters</button>
+        <div class="dropdown-content" id="myDropdown">
+            <form class="form-inline ml-auto" action="/filter" method="POST">
             
-        </form>
+                <div class="form-group mr-3">
+                    <label>Number of members</label><br>
+                    <input type="checkbox" id="oneMember" name="members[]" value="1">
+                    <label for="oneMember" class="mr-2">1</label>
+            
+                    <input type="checkbox" id="twoMembers" name="members[]" value="2">
+                    <label for="twoMembers" class="mr-2">2</label>
+            
+                    <input type="checkbox" id="threeMembers" name="members[]" value="3">
+                    <label for="threeMembers" class="mr-2">3</label>
+            
+                    <input type="checkbox" id="fourMembers" name="members[]" value="4">
+                    <label for="fourMembers" class="mr-2">4</label>
+            
+                    <input type="checkbox" id="fiveMembers" name="members[]" value="5">
+                    <label for="fiveMembers" class="mr-2">5</label>
+            
+                    <input type="checkbox" id="sixMembers" name="members[]" value="6">
+                    <label for="sixMembers" class="mr-2">6</label>
+            
+                    <input type="checkbox" id="sevenMembers" name="members[]" value="7">
+                    <label for="severnMembers" class="mr-2">7</label>
+            
+                    <input type="checkbox" id="sevenMembers" name="members[]" value="8">
+                    <label for="eightMembers" class="mr-2">8</label>
+            
+                </div>
+                <div class="form-group mr-3">
+                    <label for="creationDateFromFilter" class="mr-2">Creation Date (from)</label>
+                    <input type="number" id="creationDateFromFilter" name="creation_date_from" class="form-control mr-3" min="1950"
+                        max="2023" placeholder="От года">
+                </div>
+                <div class="form-group mr-3">
+                    <label for="creationDateToFilter" class="mr-2">Creation Date (to)</label>
+                    <input type="number" id="creationDateToFilter" name="creation_date_to" class="form-control" min="1950"
+                        max="2023" placeholder="До года">
+                </div>
+            
+                <div class="form-group mr-3">
+                    <label for="firstAlbumFilter" class="mr-2">First Album (from)</label>
+                    <input type="number" id="firstAlbumFilter" name="firstAlbum_from" min="1950" max="2023"
+                        class="form-control mr-3">
+                </div>
+                <div class="form-group mr-3">
+                    <label for="firstAlbumFilter" class="mr-2">First Album (to)</label>
+                    <input type="number" id="firstAlbumFilter" name="firstAlbum_to" min="1950" max="2023" class="form-control mr-3">
+                </div>
+            
+                <div class="form-group mr-3">
+                    <label for="locationFilter">Location</label>
+                    <select id="locationFilter" name="location" class="form-control">
+                        <option value="">choose location...</option>
+                    </select>
+                </div>
+            
+                <button type="submit" class="btn btn-dark">Filter</button>
+            
+            </form>
+        </div>
+    </div>
         <div class="search">
             <input list="search" id="searchInput" placeholder="Search..." >
             <datalist id="search">
@@ -75,33 +94,57 @@
                 {{end}}
             </datalist>
         </div>
-    </nav>
- 
-
-    <div class="container mt-5" id="searchContainer">
-        <h1 class="text-center mb-5">Groups</h1>
-
-        <div class="row" id = "groupsList">
-            {{ range .Groups }}
-            <div class="col-lg-3 col-md-4 col-sm-6 group-container">
-                <div class="card">
-                    <img src="{{ .Image }}" alt="{{ .Name }}" class="card-img-top" width="200">
-                    <div class="card-body" id="artistName">
-                        <a class="character-name" href="/groups/{{ .Id }}">{{ .Name }}</a>
-                    </div>
-                </div>
-            </div>
-            {{ end }}
-        </div>
     </div>
+</div>
+</nav>
+ 
+<div class="music" id="searchContainer">
+    <div class="rows" id = "groupsList">
+        {{range .Groups}}
+        <a href="/groups/{{.Id}}" style="text-decoration: none;">
+            <div class="box">
 
-    
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 kamamedov, msardarb</p>
-        </div>
-    </footer>
+                <img img src="{{.Image}}" alt="{{.Name}}">
+                <p style="color: rgb(250, 250, 250);" class="artistname">{{.Name}}</p>
 
+            </div>
+        </a>
+        {{end}}
+
+    </div>
+</div>
+<footer class="footer">
+    <p style="text-decoration: none;color: white;">Authors:</p>
+    <a style="text-decoration: none;color: white;" href="https://t.me/shabytjoq"
+        target="_blank">Amanzhol Shamel</a>
+    <!-- <a href="https://www.instagram.com/sabszero/" target="_blank">
+            <img src="/static/img/instagram.png" alt="Instagram">
+        </a> -->
+    <a style="text-decoration: none;color: white;" href="https://t.me/Mirasssssssss"
+        target="_blank">Miras Sardarbekov</a>
+    <a style="text-decoration: none;color: white;" href="https://t.me/dauletzhanov_a" target="_blank">Adelya Alimbayeva</a>
+    <!-- <a href="https://www.instagram.com/sardarbekov.m/" target="_blank">
+            <img src="/static/img/instagram.png" alt="Instagram">
+        </a> -->
+</footer>
+   
+<script>
+    // JavaScript для управления видимостью дроплиста
+    function toggleDropdown() {
+        var dropdownList = document.getElementById("myDropdown");
+        dropdownList.style.display = (dropdownList.style.display === 'block') ? 'none' : 'block';
+    }
+
+    // Закрыть дроплист, если пользователь щелкает вне него
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropdown-button')) {
+            var dropdownList = document.getElementById("myDropdown");
+            if (dropdownList.style.display === 'block') {
+                dropdownList.style.display = 'none';
+            }
+        }
+    }
+</script>
     <script src="/js/search.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

@@ -1,0 +1,270 @@
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 18px;
+} */
+body {
+    background-image: url(../img/bk.jpg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    font-family: 'Dela Gothic One', sans-serif;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+    flex-direction: column;
+    background-color: #f4f4f4;
+    display: flex;
+    min-height: 100vh;
+}
+.search{
+    display: flex;
+    margin-right: 20px;
+}
+.dropdown-button{
+    display: flex;
+}
+
+.header {
+    position: fixed;
+    /* Делаем header фиксированным */
+    top: 0;
+    /* Header будет прикреплен к верхней части окна браузера */
+    width: 100%;
+    /* Занимает всю ширину экрана */
+    background-color: #000000;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    /* height: 50px; */
+    /* Скрываем содержимое, выходящее за пределы блока */
+    /* white-space: nowrap; Запрещаем перенос текста на новую строку */
+    text-overflow: ellipsis;
+    /* Если текст выходит за пределы блока, добавляем многоточие (...) */
+}
+
+/* .logo img {
+    width: 100px; 
+} */
+
+.header h1 {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    color: #ebebeb;
+    font-family: 'Dela Gothic One', cursive;
+
+}
+
+/* 
+.about-link a {
+    font-size: 10px;
+    text-align: left;
+    text-decoration: none;
+    color: white;
+    margin: 20px;
+    
+} */
+
+
+footer {
+    background-color: #000000;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 2px;
+    border-top: 1px solid #000000;
+    z-index: 2;
+}
+
+.footer p,
+.footer a {
+    font-size: 14px;
+    /* Уменьшаем размер текста */
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    margin: 0 10px;
+    /* Расстояние между иконками */
+}
+
+/* .footer img {
+    width: 16px; 
+} */
+.music {
+    border-left: 10vw solid transparent;
+    border-right: 10vw solid transparent;
+    margin-top: 20px;
+    padding: 0px;
+}
+
+.rows {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 60px;
+}
+
+.box {
+    box-sizing: border-box;
+    background-color: rgb(0 0 0 / 76%);
+    background-image: url(../img/vinyl.png);
+    background-repeat: no-repeat;
+    background-size: 101%;
+    background-position: center center;
+
+    margin: 0 10px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(204, 204, 204, 0)fff;
+    padding: 20px;
+    padding-top: 18px;
+    border-radius: 49px;
+}
+
+.box:hover {
+    box-shadow: 4px 4px 4px 4px rgba(234, 234, 234, 0.768);
+}
+
+
+.box a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+}
+
+.box img {
+    max-width: 70%;
+    height: auto;
+    border-radius: 160px;
+    display: block;
+    border: 1px solid #ffffff;
+}
+
+@media screen and (max-width: 768px) {
+    .box {
+        color: rgb(240, 233, 233);
+        line-height: 1.5;
+        /* Межстрочный интервал */
+        margin-bottom: 10px;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+
+.artistname {
+    font-family: 'Dela Gothic One', sans-serif;
+    font-size: 13px;
+    /* Размер шрифта */
+    color: rgb(240, 233, 233);
+    line-height: 1.5;
+    /* Межстрочный интервал */
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    transition: color 0.3s, border-color 0.3s;
+    /* Добавляем анимацию перехода цвета текста и границ */
+    border-bottom: 2px solid transparent;
+    /* Устанавливаем невидимую границу */
+
+}
+
+.artistname:hover {
+    color: #ebebeb;
+    /* Устанавливаем новый цвет при наведении */
+    border-color: #ffffff;
+    /* Меняем цвет границы при наведении */
+    text-shadow: 2px 2px 2px #000;
+}
+
+.footer-text {
+    backdrop-filter: blur(10px);
+    background-color: rgba(151, 126, 126, 0);
+    text-align: center;
+    padding: 10px;
+
+
+}
+.nav_1 {
+    display: flex;
+    height: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    z-index: 1;
+}
+
+p {
+    display: inline;
+    margin: 0;
+}
+
+.dropdown-button {
+    margin-left:0px;
+    background-color: white;
+    color: black;
+    border: none;
+    cursor: pointer;
+}
+
+ .dropdown-container {
+     position: relative;
+     display: inline-block;
+ }
+
+ /* Styles for the button */
+ 
+
+ /* Styles for the dropdown content (hidden by default) */
+ .dropdown-content {
+    color:#000;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+ }
+
+ /* Styles for the form inside the dropdown content */
+ .dropdown-content form {
+     padding: 10px;
+     margin: 0;
+ }
+
+ /* Add some space between form elements */
+ .dropdown-content .form-group {
+     margin-bottom: 10px;
+ }
+
+ /* Show the dropdown content when the button is clicked */
+ .dropdown-container:hover .dropdown-content {
+     display: block;
+ }
+ .dropdown-container:hover .btn {
+     background-color:#000;
+    color: white;
+ }
+ .navbar-items {
+     display: flex;
+     justify-content: flex-end;
+ }
+
+ .navbar-items button {
+     margin-right: 10px;
+     color: #000;
+     border: none;
+     padding: 10px;
+     cursor: pointer;
+ }
+   .navbar-center {
+    text-align: center;
+    flex-grow: 1;
+   }

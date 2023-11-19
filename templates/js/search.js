@@ -61,14 +61,16 @@ function displaySuggestions(suggestions) {
         const h2 = document.createElement("h2");
         h2.style.textAlign = "center";
         h2.style.fontSize = "20px"
-        h2.style.color = "#000"
+        h2.style.color = "white"
         img.style.paddingRight = "20px"
         a.href = "/groups/" + key;
+        a.style.textDecoration = "none"
         img.src = image2[key-1].getAttribute("src");
         h2.textContent = suggestions["artists"][key];
         a.appendChild(img);
         a.appendChild(h2);
         let container = document.createElement("div")
+        container.style.marginBottom = "20px"
         container.appendChild(a)
         artistList.appendChild(container);
      }
